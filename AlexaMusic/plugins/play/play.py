@@ -61,7 +61,7 @@ async def play_commnd(
         )
         return
     mystic = await message.reply_text(
-        _["play_2"].format(channel) if channel else _["play_1"]
+        _["oynat_2"].format(channel) if channel else _["play_1"]
     )
     plist_id = None
     slider = None
@@ -81,7 +81,7 @@ async def play_commnd(
     )
     if audio_telegram:
         if audio_telegram.file_size > config.TG_AUDIO_FILESIZE_LIMIT:
-            return await mystic.edit_text(_["play_5"])
+            return await mystic.edit_text(_["oynat_5"])
         duration_min = seconds_to_min(audio_telegram.duration)
         if (audio_telegram.duration) > config.DURATION_LIMIT:
             return await mystic.edit_text(
@@ -119,7 +119,7 @@ async def play_commnd(
         return
     elif video_telegram:
         if not await is_video_allowed(message.chat.id):
-            return await mystic.edit_text(_["play_3"])
+            return await mystic.edit_text(_["oynat_3"])
         if message.reply_to_message.document:
             try:
                 ext = video_telegram.file_name.split(".")[-1]
@@ -557,7 +557,7 @@ async def play_playlists_command(client, CallbackQuery, _):
     except:
         pass
     mystic = await CallbackQuery.message.reply_text(
-        _["play_2"].format(channel) if channel else _["play_1"]
+        _["play_2"].format(channel) if channel else _["oynat_1"]
     )
     videoid = lyrical.get(videoid)
     video = True if mode == "v" else None
@@ -573,27 +573,27 @@ async def play_playlists_command(client, CallbackQuery, _):
                 True,
             )
         except Exception:
-            return await mystic.edit_text(_["play_3"])
+            return await mystic.edit_text(_["oynat_3"])
     if ptype == "spplay":
         try:
             result, spotify_id = await Spotify.playlist(videoid)
         except Exception:
-            return await mystic.edit_text(_["play_3"])
+            return await mystic.edit_text(_["oynat_3"])
     if ptype == "spalbum":
         try:
             result, spotify_id = await Spotify.album(videoid)
         except Exception:
-            return await mystic.edit_text(_["play_3"])
+            return await mystic.edit_text(_["oynat_3"])
     if ptype == "spartist":
         try:
             result, spotify_id = await Spotify.artist(videoid)
         except Exception:
-            return await mystic.edit_text(_["play_3"])
+            return await mystic.edit_text(_["oynat_3"])
     if ptype == "apple":
         try:
             result, apple_id = await Apple.playlist(videoid, True)
         except Exception:
-            return await mystic.edit_text(_["play_3"])
+            return await mystic.edit_text(_["oynat_3"])
     try:
         await stream(
             _,
@@ -648,7 +648,7 @@ async def slider_queries(client, CallbackQuery, _):
         buttons = slider_markup(_, vidid, user_id, query, query_type, cplay, fplay)
         med = InputMediaPhoto(
             media=thumbnail,
-            caption=_["play_11"].format(
+            caption=_["oynat_11"].format(
                 title.title(),
                 duration_min,
             ),
